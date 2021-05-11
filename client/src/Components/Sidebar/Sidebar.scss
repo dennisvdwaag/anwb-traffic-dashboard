@@ -1,0 +1,27 @@
+aside#sidebar {
+  position: fixed;
+  top: 60px;
+  left: 10px;
+  height: calc(100vh - 70px);
+  max-width: 500px;
+  z-index: 1;
+  background: #fff;
+  box-shadow: 0 10px 20px rgba(#000, .1);
+  overflow-x: scroll;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    margin-right: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  h2 {
+    text-align: center;
+  }
+}
