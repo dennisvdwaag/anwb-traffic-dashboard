@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cron = require('node-cron');
 
 // Declare express app
 const app = express();
@@ -17,21 +18,26 @@ app.use((req, res, next) => {
 });
 
 // Controllers
-const Roads = require('./Controllers/Roads');
-const SaveIncidents = require('./Controllers/SaveIncidents');
-const SaveRoads = require('./Controllers/SaveRoads');
+const SaveData = require('./Controllers/SaveData');
+const GetData = require('./Controllers/GetData');
+
+SaveData();
 
 // API status
 app.get('/status', (req, res, next) => {
   res.send('API Status: Running');
 });
 
-app.get('/data/roads', (req, res, next) => {
-  Roads({ req, res, next });
+app.get('/data/save', (req, res, next) => {
+  SaveData();
 });
 
-app.get('/save-roads', (req, res, next) => {
-  SaveRoads({ req, res, next });
+app.get('/data/get', (req, res, next) => {
+  GetData({ req, res, next });
+});
+
+cron.schedule('*/5 * * * *', () => {
+  SaveData();
 });
 
 app.listen(3001, () => {

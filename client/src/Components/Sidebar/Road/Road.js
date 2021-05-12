@@ -3,25 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide, faHardHat } from '@fortawesome/free-solid-svg-icons';
 import './Road.scss';
 import store from '../../../js/store/index';
+import { setBounds, setInformation } from '../../../js/actions/index';
 
 const Road = ({ road }) => {
-  const roadworks = road.roadworks;
-  const jams = road.jams;
-  let quickinfo = [];
-
-  if (roadworks.length) {
-    roadworks.forEach(roadwork => {
-      const info = <div className="roadwork" onClick={ () => { handleIncidentClick(roadwork.bounds) } }><FontAwesomeIcon icon={ faHardHat } /> Van { roadwork.from.label } tot { roadwork.to.label }</div>;
-      quickinfo.push(info);
-    });
-  }
-
-  if (jams.length) {
-    jams.forEach(jam => {
-      const info = <div className="jam" onClick={ () => { handleIncidentClick(jam.bounds) } }><FontAwesomeIcon icon={ faCarSide } /> Van { jam.from.label } tot { jam.to.label }{ undefined !== jam.distance ? ` (${ jam.distance / 1000 } km)` : ''}</div>;
-      quickinfo.push(info);
-    });
-  }
+  const incidents = road.incidents;
 
   const handleRoadClick = ev => {
     if (!ev.target.classList.contains('roadwork') && !ev.target.classList.contains('jam')) {
@@ -29,8 +14,19 @@ const Road = ({ road }) => {
     }
   }
 
-  const handleIncidentClick = bounds => {
-    store.dispatch(window.setBounds(bounds))
+  const handleIncidentClick = incident => {
+    store.dispatch(setBounds(incident.bounds));
+    store.dispatch(setInformation(
+      {
+        road: incident.road ?? null,
+        type: incident.type ?? null,
+        from: incident.from ?? null,
+        to: incident.to ?? null,
+        reason: incident.reason ?? null,
+        delay: incident.delay ?? null,
+        distance: incident.distance ?? null
+      }
+    ))
   }
 
   return (
@@ -38,17 +34,19 @@ const Road = ({ road }) => {
       <span className="name">{ road.name }</span>
       <span className="icons">
         <div className="roadworks">
-          <FontAwesomeIcon icon={ faHardHat } /> <span className="number">{ roadworks.length }</span>
+          <FontAwesomeIcon icon={ faHardHat } /> <span className="number">{ road.roadwork_amount.length ? road.roadwork_amount[0].count : 0 }</span>
         </div>
         <div className="jams">
-          <FontAwesomeIcon icon={ faCarSide } /> <span className="number">{ jams.length }</span>
+          <FontAwesomeIcon icon={ faCarSide } /> <span className="number">{ road.jam_amount.length ? road.jam_amount[0].count : 0 }</span>
         </div>
       </span>
       <span className="quickinfo">
         {
-          quickinfo.map(info => {
-            return info;
-          })
+          incidents.length ?
+            incidents.map((incident, key) => {
+              return <div className={ incident.type } onClick={ () => { handleIncidentClick(incident) } } key={ key }><FontAwesomeIcon icon={ incident.type === 'roadwork' ? faHardHat : faCarSide } /> Van { incident.from.label } tot { incident.to.label }</div>;
+            })
+          : ''
         }
       </span>
     </div>
