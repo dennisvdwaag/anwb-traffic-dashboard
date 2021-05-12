@@ -10,6 +10,16 @@
 
   h3 {
     margin: 0 0 30px;
+
+    .close {
+      float: right;
+      cursor: pointer;
+      transition: all 300ms ease;
+
+      &:hover {
+        color: #fe0000;
+      }
+    }
   }
 
   .row {

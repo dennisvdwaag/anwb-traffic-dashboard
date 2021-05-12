@@ -1,10 +1,12 @@
-import { SET_BOUNDS, SET_ROADS, SET_FILTER, SET_INFORMATION } from '../constants/action-types';
+import {
+  SET_BOUNDS, SET_ROADS, SET_FILTER, SET_INFORMATION,
+} from '../constants/action-types';
 
 const initialState = {
   roads: null,
   bounds: null,
   filter: null,
-  information: null
+  information: null,
 };
 
 function rootReducer(state = initialState, action) {
@@ -25,6 +27,6 @@ function rootReducer(state = initialState, action) {
   }
 
   return state;
-};
+}
 
 export default rootReducer;
