@@ -101,5 +101,5 @@ Maps.propTypes = {
 };
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyA3QGxol-EFFIQZgZnu0zTJPVkgxvnFJhU', // 'AIzaSyDYhmmgZPV4hmWE81saE92UbbLAWkhBsC0'
+  apiKey: 'AIzaSyA3QGxol-EFFIQZgZnu0zTJPVkgxvnFJhU',
 })(Maps);

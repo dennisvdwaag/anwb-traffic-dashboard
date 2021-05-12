@@ -10,23 +10,25 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
+  const newState = { ...state };
+
   if (action.type === SET_BOUNDS) {
-    state.bounds = action.payload;
+    newState.bounds = action.payload;
   }
 
   if (action.type === SET_ROADS) {
-    state.roads = action.payload;
+    newState.roads = action.payload;
   }
 
   if (action.type === SET_FILTER) {
-    state.filter = action.payload;
+    newState.filter = action.payload;
   }
 
   if (action.type === SET_INFORMATION) {
-    state.information = action.payload;
+    newState.information = action.payload;
   }
 
-  return state;
+  return newState;
 };
 
 export default rootReducer;
