@@ -14,6 +14,8 @@ cd client/
 npm install
 ```
 
+De `.env` mag in de root!
+
 ## Opstarten
 Je kunt de server en de React App draaien door in `anwb-traffic-dashboard/` het volgende te draaien:
 ```bash
