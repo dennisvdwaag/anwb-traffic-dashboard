@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cron = require('node-cron');
+const path = require('path');
 
 // Declare express app
 const app = express();
@@ -28,10 +29,6 @@ app.get('/status', (req, res, next) => {
   res.send('API Status: Running');
 });
 
-app.get('/data/save', (req, res, next) => {
-  SaveData();
-});
-
 app.get('/data/get', (req, res, next) => {
   GetData({ req, res, next });
 });
@@ -39,6 +36,10 @@ app.get('/data/get', (req, res, next) => {
 cron.schedule('*/5 * * * *', () => {
   SaveData();
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+}
 
 app.listen(3001, () => {
   console.log('Server running!');

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide, faHardHat } from '@fortawesome/free-solid-svg-icons';
 import './Road.scss';
@@ -43,10 +44,14 @@ const Road = ({ road }) => {
       <span className="name">{ road.name }</span>
       <span className="icons">
         <div className="roadworks">
-          <FontAwesomeIcon icon={faHardHat} /> <span className="number">{ road.roadwork_amount.length ? road.roadwork_amount[0].count : 0 }</span>
+          <FontAwesomeIcon icon={faHardHat} />
+          {' '}
+          <span className="number">{ road.roadwork_amount.length ? road.roadwork_amount[0].count : 0 }</span>
         </div>
         <div className="jams">
-          <FontAwesomeIcon icon={faCarSide} /> <span className="number">{ road.jam_amount.length ? road.jam_amount[0].count : 0 }</span>
+          <FontAwesomeIcon icon={faCarSide} />
+          {' '}
+          <span className="number">{ road.jam_amount.length ? road.jam_amount[0].count : 0 }</span>
         </div>
       </span>
       <span className="quickinfo">
@@ -54,7 +59,15 @@ const Road = ({ road }) => {
           incidents.length
             ? incidents.map((incident) => (
               <div className={incident.type} onClick={() => { handleIncidentClick(incident); }} key={road.extid} aria-hidden="true">
-                <FontAwesomeIcon icon={incident.type === 'roadwork' ? faHardHat : faCarSide} /> Van { incident.from.label } tot { incident.to.label }
+                <FontAwesomeIcon icon={incident.type === 'roadwork' ? faHardHat : faCarSide} />
+                {' '}
+                Van
+                {' '}
+                { incident.from.label }
+                {' '}
+                tot
+                {' '}
+                { incident.to.label }
               </div>
             ))
             : ''
@@ -62,6 +75,10 @@ const Road = ({ road }) => {
       </span>
     </div>
   );
+};
+
+Road.propTypes = {
+  road: PropTypes.isRequired,
 };
 
 export default Road;

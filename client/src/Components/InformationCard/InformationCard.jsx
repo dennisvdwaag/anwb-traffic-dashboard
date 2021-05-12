@@ -27,7 +27,12 @@ const InformationCard = () => {
           ? (
             <>
               <h3>
-                { card.road } ({ card.type === 'roadwork' ? 'Wegwerkzaamheden' : 'File' }) <FontAwesomeIcon icon={faTimes} onClick={handleClose} className="close" />
+                { card.road }
+                {' '}
+                (
+                { card.type === 'roadwork' ? 'Wegwerkzaamheden' : 'File' }
+                )
+                <FontAwesomeIcon icon={faTimes} onClick={handleClose} className="close" />
               </h3>
               <div className="info">
                 <div className="row">
@@ -47,7 +52,9 @@ const InformationCard = () => {
                   <div className="row">
                     <span className="title">Lengte:</span>
                     <span className="value">
-                      { card.distance / 1000 } km
+                      { card.distance / 1000 }
+                      {' '}
+                      km
                     </span>
                   </div>
                 </>
@@ -61,7 +68,9 @@ const InformationCard = () => {
                   <div className="row">
                     <span className="title">Vertraging:</span>
                     <span className="value">
-                      { card.delay / 60 } minuten
+                      { card.delay / 60 }
+                      {' '}
+                      minuten
                     </span>
                   </div>
                 </>

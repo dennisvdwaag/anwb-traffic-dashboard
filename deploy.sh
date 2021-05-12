@@ -3,16 +3,20 @@
 echo "Switching to branch master"
 git checkout master
 
-echo "Deploying server files to server"
-scp -r server/ .env root@daex.nl:/var/www/server.dennisvdwaag.nl/
-
-echo "Move to client folder"
+echo "Switch to client dir"
 cd client/
 
 echo "Building app"
 npm run build
 
+cp -r build/ ../build
+
+echo "Switch back to root"
+cd ../
+
 echo "Deploying client files to server"
-scp -r build/ root@daex.nl:/var/www/ysp.dennisvdwaag.nl/
+scp -r build/ server/ root@daex.nl:/var/www/ysp.dennisvdwaag.nl/
+
+rm -rf build/
 
 echo "Client deployment complete"

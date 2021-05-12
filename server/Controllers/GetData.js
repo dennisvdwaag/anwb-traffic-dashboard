@@ -91,6 +91,8 @@ const GetData = async ({ req, res, next }) => {
     ];
   }
 
+  console.log(incidentQuery, roadworkQuery, jamQuery);
+
   const roads = await db.collection('roads').aggregate(
     [
       {

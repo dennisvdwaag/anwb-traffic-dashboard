@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import decodePolyline from 'decode-google-map-polyline';
 import { Map, GoogleApiWrapper, Polyline } from 'google-maps-react';
@@ -93,6 +94,10 @@ const Maps = ({ google }) => {
       }
     </Map>
   );
+};
+
+Maps.propTypes = {
+  google: PropTypes.isRequired,
 };
 
 export default GoogleApiWrapper({

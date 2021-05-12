@@ -9,7 +9,7 @@ const initialState = {
   information: null,
 };
 
-function rootReducer(state = initialState, action) {
+const rootReducer = (state = initialState, action) => {
   if (action.type === SET_BOUNDS) {
     state.bounds = action.payload;
   }
@@ -27,6 +27,6 @@ function rootReducer(state = initialState, action) {
   }
 
   return state;
-}
+};
 
 export default rootReducer;

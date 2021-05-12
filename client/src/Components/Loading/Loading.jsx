@@ -6,7 +6,9 @@ import './Loading.scss';
 const Loading = () => (
   <div id="loading">
     <h2>
-      <FontAwesomeIcon icon={faSpinner} spin /> Laden...
+      <FontAwesomeIcon icon={faSpinner} spin />
+      {' '}
+      Laden...
     </h2>
   </div>
 );

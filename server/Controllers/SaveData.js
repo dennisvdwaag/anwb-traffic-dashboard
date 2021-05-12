@@ -149,14 +149,14 @@ const SaveData = () => {
 
       await db.collection('incidents').bulkWrite(incidentOps, {
         ordered: false
-      }).then(async () => {
-        await updateRemovedIncidents(dateNow, db);
       });
+
+      await updateRemovedIncidents(dateNow, db);
 
     } catch(err) {
       console.error(err);
     } finally {
-      console.log('Cronjon done');
+        console.log('Cronjon done');
     }
   });
 }
