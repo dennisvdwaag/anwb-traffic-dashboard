@@ -156,7 +156,8 @@ const SaveData = () => {
     } catch(err) {
       console.error(err);
     } finally {
-        console.log('Cronjon done');
+      client.close();
+      console.log('Cronjon done');
     }
   });
 }
