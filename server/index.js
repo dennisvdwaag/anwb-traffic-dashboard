@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cron = require('node-cron');
 const path = require('path');
+const { MongoClient } = require('mongodb');
 
 // Declare express app
 const app = express();
@@ -22,19 +23,37 @@ app.use((req, res, next) => {
 const SaveData = require('./Controllers/SaveData');
 const GetData = require('./Controllers/GetData');
 
-SaveData();
+// Connect to the database
+const connectDatabase = async () => {
+  const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_CLUSTER}/anwb-dashboard?retryWrites=true&w=majority&useUnifiedTopology=true`;
+  const client = new MongoClient(uri);
+
+  await client.connect();
+
+  return client;
+}
+
+connectDatabase()
+.then(client => {
+  // Save data on startup
+  SaveData(client);
+
+  app.get('/data/get', (req, res, next) => {
+    GetData({ req, res, next, client});
+  });
+  
+  cron.schedule('*/5 * * * *', () => {
+    SaveData(client);
+  });
+})
+.catch(err => {
+  console.warn(err);
+});
+
 
 // API status
 app.get('/status', (req, res, next) => {
   res.send('API Status: Running');
-});
-
-app.get('/data/get', (req, res, next) => {
-  GetData({ req, res, next });
-});
-
-cron.schedule('*/5 * * * *', () => {
-  SaveData();
 });
 
 if (process.env.NODE_ENV === 'production') {

@@ -1,11 +1,6 @@
 require('dotenv').config();
-const { MongoClient } = require('mongodb');
 
-const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_CLUSTER}/anwb-dashboard?retryWrites=true&w=majority&useUnifiedTopology=true`;
-const client = new MongoClient(uri);
-
-const GetData = async ({ req, res, next }) => {
-  await client.connect();
+const GetData = async ({ req, res, next, client }) => {
   const db = client.db('anwb-dashboard');
 
   const date = new Date(req.query.filter);
@@ -90,8 +85,6 @@ const GetData = async ({ req, res, next }) => {
       }
     ];
   }
-
-  console.log(incidentQuery, roadworkQuery, jamQuery);
 
   const roads = await db.collection('roads').aggregate(
     [

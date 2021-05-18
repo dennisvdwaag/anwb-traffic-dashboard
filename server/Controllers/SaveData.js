@@ -1,11 +1,7 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const { MongoClient } = require('mongodb');
 
-const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_CLUSTER}/anwb-dashboard?retryWrites=true&w=majority&useUnifiedTopology=true`;
-const client = new MongoClient(uri);
-
-const SaveData = () => {
+const SaveData = (client) => {
   let roadOps = [];
   let incidentOps = [];
 
@@ -15,7 +11,6 @@ const SaveData = () => {
   .then(data => data.json())
   .then(async response => {
     try {
-      await client.connect();
       const db = client.db('anwb-dashboard');
       const dateNow = new Date();
 
@@ -156,7 +151,6 @@ const SaveData = () => {
     } catch(err) {
       console.error(err);
     } finally {
-      client.close();
       console.log('Cronjon done');
     }
   });
